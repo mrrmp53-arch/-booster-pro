@@ -2,6 +2,7 @@ from pathlib import Path
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
+import os
 import secrets
 import hmac
 import time
@@ -9,11 +10,11 @@ from collections import defaultdict, deque
 from functools import wraps
 
 app = Flask(__name__)
-app.secret_key = Path(".secret_key").read_text().strip()
+app.secret_key = os.environ.get("SECRET_KEY") or Path(".secret_key").read_text().strip()
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["PERMANENT_SESSION_LIFETIME"] = 1800
-DB = "database/boost.db"
+DB = os.environ.get("DATABASE_PATH", "database/boost.db")
 
 
 
@@ -71,6 +72,7 @@ def record_login_failure(key):
 
 
 def init_db():
+    Path(DB).parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(DB)
 
     conn.execute("""
@@ -86,6 +88,48 @@ def init_db():
             views INTEGER DEFAULT 0,
             likes INTEGER DEFAULT 0,
             comments INTEGER DEFAULT 0
+        )
+    """)
+
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password_hash TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS user_stats (
+            user_id INTEGER NOT NULL,
+            platform TEXT NOT NULL,
+            followers INTEGER DEFAULT 0,
+            PRIMARY KEY (user_id, platform),
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )
+    """)
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS user_analytics (
+            user_id INTEGER NOT NULL,
+            platform TEXT NOT NULL,
+            views INTEGER DEFAULT 0,
+            likes INTEGER DEFAULT 0,
+            comments INTEGER DEFAULT 0,
+            PRIMARY KEY (user_id, platform),
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )
+    """)
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS user_profile_links (
+            user_id INTEGER NOT NULL,
+            platform TEXT NOT NULL,
+            url TEXT DEFAULT '',
+            PRIMARY KEY (user_id, platform),
+            FOREIGN KEY (user_id) REFERENCES users(id)
         )
     """)
 
