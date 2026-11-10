@@ -1,0 +1,12 @@
+.secret_key
+.env
+database/*.db*
+__pycache__/
+*.pyc
+*.log
+*.backup
+*.bak
+app.py.before-*
+static.backup/
+templates.backup/
+templates/*.before-*

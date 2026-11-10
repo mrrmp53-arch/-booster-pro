@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BOOSTER PRO</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header>
+<h1>🚀 BOOSTER PRO</h1>
+<p>Facebook + TikTok Growth Dashboard</p>
+<p id="status">● SERVER ONLINE</p>
+</header>
+
+<div class="cards">
+<div class="card facebook">
+<h2>📘 Facebook</h2>
+<h1 id="fb-followers">0</h1>
+<p>Followers</p>
+</div>
+
+<div class="card tiktok">
+<h2>🎵 TikTok</h2>
+<h1 id="tt-followers">0</h1>
+<p>Followers</p>
+</div>
+</div>
+
+<div class="panel">
+<h2>⚙️ Admin Panel</h2>
+
+<label>Platform</label>
+<select id="platform">
+<option value="facebook">Facebook</option>
+<option value="tiktok">TikTok</option>
+</select>
+
+<label>Real Followers Count</label>
+<input type="number" id="followers" min="0" placeholder="Enter followers">
+
+<button onclick="updateStats()">Update Statistics</button>
+<button onclick="loadStats()">Refresh</button>
+
+<p id="message"></p>
+</div>
+
+
+<div class="panel">
+    <h2>📊 Social Analytics</h2>
+
+    <label>Platform</label>
+    <select id="analytics-platform">
+        <option value="facebook">Facebook</option>
+        <option value="tiktok">TikTok</option>
+    </select>
+
+    <label>👁️ Views</label>
+    <input type="number" id="views" min="0" placeholder="Enter views">
+
+    <label>❤️ Likes</label>
+    <input type="number" id="likes" min="0" placeholder="Enter likes">
+
+    <label>💬 Comments</label>
+    <input type="number" id="comments" min="0" placeholder="Enter comments">
+
+    <button onclick="updateAnalytics()">Save Analytics</button>
+
+    <p id="analytics-message"></p>
+</div>
+<div class="panel">
+    <h2>📊 Saved Analytics</h2>
+
+    <h3>📘 Facebook</h3>
+    <p>Views: <b id="fb-views">0</b></p>
+    <p>Likes: <b id="fb-likes">0</b></p>
+    <p>Comments: <b id="fb-comments">0</b></p>
+
+    <hr>
+
+    <h3>🎵 TikTok</h3>
+    <p>Views: <b id="tt-views">0</b></p>
+    <p>Likes: <b id="tt-likes">0</b></p>
+    <p>Comments: <b id="tt-comments">0</b></p>
+</div>
+<div class="panel">
+    <h2>🔗 Social Profile Links</h2>
+
+    <label>📘 Facebook Page URL</label>
+    <input type="url" id="facebook-url"
+           placeholder="https://facebook.com/yourpage">
+
+    <label>🎵 TikTok Profile URL</label>
+    <input type="url" id="tiktok-url"
+           placeholder="https://tiktok.com/@username">
+
+    <button onclick="saveLinks()">Save Profile Links</button>
+
+    <p id="links-message"></p>
+</div>
+<div class="panel">
+    <h2>🌐 Social Profile Preview</h2>
+
+    <div class="profile-links">
+        <a id="facebook-preview"
+           href="#"
+           target="_blank"
+           rel="noopener noreferrer"
+           hidden>
+           📘 Open Facebook Page
+        </a>
+
+        <a id="tiktok-preview"
+           href="#"
+           target="_blank"
+           rel="noopener noreferrer"
+           hidden>
+           🎵 Open TikTok Profile
+        </a>
+
+        <p id="preview-message">No profile links saved yet.</p>
+    </div>
+</div>
+
+<div class="panel">
+    <p>👤 Welcome, {{ session.get('username', 'User') }}</p>
+    <form method="POST" action="/logout">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit">🚪 Logout</button>
+    </form>
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>

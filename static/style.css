@@ -1,0 +1,141 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #090d18;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 700px;
+    margin: auto;
+}
+
+header {
+    text-align: center;
+    padding: 25px 10px;
+    background: linear-gradient(135deg, #151d35, #25204b);
+    border-radius: 18px;
+    margin-bottom: 25px;
+}
+
+header h1 {
+    color: #00e5ff;
+    font-size: 28px;
+}
+
+header p {
+    color: #aaa;
+    margin-top: 12px;
+}
+
+#status {
+    color: #00ff99;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.card, .panel {
+    background: #151c2e;
+    padding: 22px;
+    border-radius: 16px;
+    border: 1px solid #26334f;
+    margin-bottom: 18px;
+}
+
+.card {
+    text-align: center;
+}
+
+.card h2 {
+    font-size: 17px;
+}
+
+.card h1 {
+    font-size: 30px;
+    margin: 18px 0 8px;
+}
+
+.facebook h1 {
+    color: #1685ff;
+}
+
+.tiktok h1 {
+    color: #ff4b91;
+}
+
+.panel h2 {
+    color: #00e5ff;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin: 15px 0 8px;
+}
+
+select, input {
+    width: 100%;
+    padding: 13px;
+    border-radius: 9px;
+    border: 1px solid #35415e;
+    background: #090d18;
+    color: white;
+    font-size: 16px;
+}
+
+button {
+    background: linear-gradient(135deg, #087cff, #7b3cff);
+    border: none;
+    color: white;
+    padding: 13px 18px;
+    border-radius: 10px;
+    margin: 15px 5px 0 0;
+    font-size: 14px;
+}
+
+button:active {
+    opacity: 0.7;
+}
+
+#message {
+    margin-top: 15px;
+    color: #00ff99;
+}
+
+@media(max-width: 400px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}
+.profile-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.profile-links a {
+    display: block;
+    padding: 14px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #087cff, #7b3cff);
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+}
+
+.profile-links a[hidden] {
+    display: none;
+}
+
+#preview-message {
+    color: #00ff99;
+    margin-top: 10px;
+}
